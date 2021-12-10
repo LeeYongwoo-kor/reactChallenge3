@@ -1,7 +1,9 @@
 // HOME
-import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoins } from "../api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -37,6 +39,7 @@ const Coin = styled.li`
 `;
 
 const Title = styled.h1`
+  font-size: 48px;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -51,7 +54,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -62,7 +65,8 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins); // arg -> 1. query key, 2. fetcher function
+  /*   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
@@ -71,17 +75,20 @@ function Coins() {
       setCoins(json.slice(0, 100));
       setLoading(false);
     })(); // IFFE(즉시실행함수)
-  }, []); // component가 시작, 종료, 변화가 일어날때. 선택할 수 있음
+  }, []); // component가 시작, 종료, 변화가 일어날때. 선택할 수 있음 */
   return (
     <Container>
+      <Helmet>
+        <title>Coins</title>
+      </Helmet>
       <Header>
         <Title>Coins</Title>
       </Header>
-      {loading ? (
+      {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {coins.map((coin) => (
+          {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{
