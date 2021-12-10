@@ -35,7 +35,7 @@ interface IPriceData {
 }
 
 interface PriceProps {
-  data: IPriceData;
+  data: IPriceData | string;
 }
 
 function Price({ data }: PriceProps) {
