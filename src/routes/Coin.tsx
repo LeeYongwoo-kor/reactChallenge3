@@ -20,6 +20,20 @@ const Header = styled.header`
   align-items: center;
 `;
 
+const Footer = styled.footer`
+  height: 5vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+  color: ${(props) => props.theme.textColor};
+  &:hover {
+    background-color: #777777;
+    color: black;
+    cursor: pointer;
+  }
+`;
+
 const Title = styled.h1`
   font-size: 48px;
   color: ${(props) => props.theme.accentColor};
@@ -76,6 +90,17 @@ const Tab = styled.span<{ isActive: boolean }>`
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+  }
+`;
+
+const Back = styled.span`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 400;
+  a {
+    display: block;
+    padding: 10px 0px;
   }
 `;
 
@@ -231,9 +256,17 @@ function Coin() {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path="price" element={<Price />} />
+            <Route
+              path="price"
+              element={<Price data={tickersData as PriceData} />}
+            />
             <Route path="chart" element={<Chart coinId={coinId} />} />
           </Routes>
+          <Footer>
+            <Back>
+              <Link to={"/"}>⬅ Back</Link>
+            </Back>
+          </Footer>
         </>
       )}
     </Container>
