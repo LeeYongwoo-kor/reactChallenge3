@@ -1,7 +1,8 @@
-import React from "react";
-import { createGlobalStyle } from "styled-components";
+import React, { useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
+import { darkTheme, lightTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap');
@@ -71,11 +72,16 @@ const GlobalStyle = createGlobalStyle`
 // from https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인했는지 안했는지!
+  const toggleDark = () => setIsDark((current) => !current);
   return (
     <>
-      <GlobalStyle />
-      <Router />
-      <ReactQueryDevtools />
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Router isDark={isDark} toggleDark={toggleDark} />
+        <ReactQueryDevtools />
+      </ThemeProvider>
     </>
   );
 }
