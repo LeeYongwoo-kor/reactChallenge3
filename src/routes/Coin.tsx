@@ -258,13 +258,7 @@ function Coin() {
           <Routes>
             <Route
               path="price"
-              element={
-                <Price
-                  data={
-                    tickersData !== null ? (tickersData as PriceData) : coinId
-                  }
-                />
-              }
+              element={<Price data={tickersData as PriceData} />}
             />
             <Route path="chart" element={<Chart coinId={coinId} />} />
           </Routes>

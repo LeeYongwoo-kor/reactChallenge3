@@ -1,4 +1,4 @@
-import { useTable } from "react-table";
+import styled from "styled-components";
 
 interface IPriceData {
   id: string;
@@ -35,22 +35,64 @@ interface IPriceData {
 }
 
 interface PriceProps {
-  data: IPriceData | string;
+  data: IPriceData;
 }
+
+const Container = styled.div`
+  padding: 0px 20px;
+  max-width: 480px;
+  margin: 0 auto;
+`;
+
+const CoinInfoBox = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  margin: 25px 0px;
+`;
+
+const CoinInfo = styled.div<{ isDown?: boolean }>`
+  :nth-child(odd) {
+    font-size: 15px;
+    color: ${(props) => props.theme.accentColor};
+  }
+  :nth-child(even) {
+    color: ${(props) => (props.isDown ? "#ff4848" : "#3cff00")};
+  }
+  padding: 10px 0px;
+`;
 
 function Price({ data }: PriceProps) {
   return (
-    <table>
-      <thead>
-        <tr>
-          <td></td>
-          <td></td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr></tr>
-      </tbody>
-    </table>
+    <Container>
+      <CoinInfoBox>
+        <CoinInfo>PRICE</CoinInfo>
+        <CoinInfo>$ {data?.quotes.USD.price.toFixed(4)}</CoinInfo>
+        <CoinInfo>1H</CoinInfo>
+        <CoinInfo isDown={data?.quotes.USD.percent_change_1h < 0}>
+          {data?.quotes.USD.percent_change_1h < 0 ? "🔻" : "💹"}
+          {data?.quotes.USD.percent_change_1h}
+        </CoinInfo>
+        <CoinInfo>24H</CoinInfo>
+        <CoinInfo isDown={data?.quotes.USD.percent_change_24h < 0}>
+          {data?.quotes.USD.percent_change_24h < 0 ? "🔻" : "💹"}
+          {data?.quotes.USD.percent_change_24h}
+        </CoinInfo>
+        <CoinInfo>7D</CoinInfo>
+        <CoinInfo isDown={data?.quotes.USD.percent_change_7d < 0}>
+          {data?.quotes.USD.percent_change_7d < 0 ? "🔻" : "💹"}
+          {data?.quotes.USD.percent_change_7d}
+        </CoinInfo>
+        <CoinInfo>30D</CoinInfo>
+        <CoinInfo isDown={data?.quotes.USD.percent_change_30d < 0}>
+          {data?.quotes.USD.percent_change_30d < 0 ? "🔻" : "💹"}
+          {data?.quotes.USD.percent_change_30d}
+        </CoinInfo>
+        <CoinInfo>ATH</CoinInfo>
+        <CoinInfo>$ {data?.quotes.USD.ath_price.toFixed(4)}</CoinInfo>
+        <CoinInfo>MarketCap</CoinInfo>
+        <CoinInfo>$ {data?.quotes.USD.market_cap}</CoinInfo>
+      </CoinInfoBox>
+    </Container>
   );
 }
 
