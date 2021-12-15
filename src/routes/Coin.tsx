@@ -173,11 +173,7 @@ interface PriceData {
   };
 }
 
-interface ICoinProps {
-  isDark: boolean;
-}
-
-function Coin({ isDark }: ICoinProps) {
+function Coin() {
   const { coinId } = useParams() as RouteParams; // URL의 파라미터를 줌
   const { state } = useLocation() as RouteState; // URL이 변경될때마다 새로운 location이 반환되는 useState
   const priceMatch = useMatch("/:coinId/price"); // 특정한 URL에 있는지의 여부를 알려준다
@@ -264,10 +260,7 @@ function Coin({ isDark }: ICoinProps) {
               path="price"
               element={<Price data={tickersData as PriceData} />}
             />
-            <Route
-              path="chart"
-              element={<Chart coinId={coinId} isDark={isDark} />}
-            />
+            <Route path="chart" element={<Chart coinId={coinId} />} />
           </Routes>
           <Footer>
             <Back>

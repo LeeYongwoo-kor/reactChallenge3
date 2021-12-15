@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { useRecoilValue } from "recoil";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { isDarkAtom } from "./atoms";
 import Router from "./Router";
 import { darkTheme, lightTheme } from "./theme";
 
@@ -72,14 +74,12 @@ const GlobalStyle = createGlobalStyle`
 // from https://github.com/zacanger/styled-reset/blob/master/src/index.ts
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인했는지 안했는지!
-  const toggleDark = () => setIsDark((current) => !current);
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Router isDark={isDark} toggleDark={toggleDark} />
+        <Router />
         <ReactQueryDevtools />
       </ThemeProvider>
     </>
