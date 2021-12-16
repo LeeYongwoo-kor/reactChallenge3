@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Coin from "./routes/Coin";
-import Coins from "./routes/Coins";
+import TodoList from "./TodoList";
 
 function Router() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path="/:coinId/*" element={<Coin />}></Route>
-        <Route path="/" element={<Coins />}></Route>
+        <Route path="/" element={<TodoList />}></Route>
       </Routes>
     </BrowserRouter>
   );
