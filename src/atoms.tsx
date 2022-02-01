@@ -6,20 +6,26 @@ export enum Categories {
   "DONE" = "DONE",
 }
 
+export enum LocalStorage {
+  "ID" = "TODOS",
+}
+
 export interface IToDo {
   text: string;
   id: number;
   category: Categories;
 }
 
-export const categoryState = atom<Categories>({
-  key: "category",
-  default: Categories.TO_DO,
-});
+const loadToDos = localStorage.getItem(LocalStorage.ID);
 
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
-  default: [],
+  default: JSON.parse(loadToDos as any) || [],
+});
+
+export const categoryState = atom<Categories>({
+  key: "category",
+  default: Categories.TO_DO,
 });
 
 export const toDoSelector = selector({
